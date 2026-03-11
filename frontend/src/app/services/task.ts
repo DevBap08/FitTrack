@@ -2,6 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthService } from './auth';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { AuthService } from './auth';
 export class TaskService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
-  private apiUrl = 'http://127.0.0.1:8080';
+  private apiUrl = environment.apiUrl;
 
   tasks = signal<any[]>([]);
 

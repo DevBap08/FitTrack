@@ -1,6 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface FoodLog {
     id?: number;
@@ -18,7 +19,7 @@ export interface FoodLog {
 })
 export class FoodService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://127.0.0.1:8080';
+    private apiUrl = environment.apiUrl;
 
     logs = signal<FoodLog[]>([]);
 

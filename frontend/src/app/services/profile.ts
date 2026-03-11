@@ -1,6 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface UserProfile {
     id?: number;
@@ -19,7 +20,7 @@ export interface UserProfile {
 })
 export class ProfileService {
     private http = inject(HttpClient);
-    private apiUrl = 'http://127.0.0.1:8080';
+    private apiUrl = environment.apiUrl;
 
     profile = signal<UserProfile | null>(null);
 
