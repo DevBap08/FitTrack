@@ -17,8 +17,9 @@ app = FastAPI(title="Life Tracker API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:4200",             # Local development
-        "https://fittrack-app.vercel.app",   # Production frontend (update once Vercel URL is known)
+        "http://localhost:4200",                    # Local development
+        "https://fittrack-app.vercel.app",          # Vercel frontend (update after Vercel deploy)
+        "https://fittrack-api-yffr.onrender.com",   # Render backend self-reference
     ],
     allow_credentials=True,
     allow_methods=["*"],
