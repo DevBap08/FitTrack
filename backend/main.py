@@ -18,7 +18,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:4200",                    # Local development
-        "https://fittrack-app.vercel.app",          # Vercel frontend (update after Vercel deploy)
+        "https://project-eqm8o.vercel.app",         # Vercel production frontend
         "https://fittrack-api-yffr.onrender.com",   # Render backend self-reference
     ],
     allow_credentials=True,
