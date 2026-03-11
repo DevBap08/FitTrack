@@ -1,0 +1,91 @@
+# =============================================
+# .gitignore for Angular + FastAPI (TryAngle)
+# =============================================
+
+# ─────────────────────────────────────────────
+# ENVIRONMENT & SECRETS
+# Never commit real credentials or API keys!
+# ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─────────────────────────────────────────────
+# PYTHON / FASTAPI (Backend)
+# ─────────────────────────────────────────────
+
+# Compiled Python files (auto-generated)
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environments (dependencies installed here; tracked via requirements.txt)
+venv/
+env/
+.venv/
+ENV/
+
+# Local SQLite database (contains real user data — do not commit)
+*.db
+*.sqlite3
+workout.db
+
+# Distribution/packaging
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Test & coverage outputs
+.pytest_cache/
+htmlcov/
+.coverage
+
+# ─────────────────────────────────────────────
+# NODE / ANGULAR (Frontend)
+# ─────────────────────────────────────────────
+
+# Node modules — massive folder, tracked via package.json
+frontend/node_modules/
+
+# Build output — compiled bundles, not source
+frontend/dist/
+frontend/tmp/
+frontend/out-tsc/
+frontend/.angular/
+
+# Testing and coverage
+frontend/coverage/
+
+# ─────────────────────────────────────────────
+# IDEs and Editor Settings
+# ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ─────────────────────────────────────────────
+# OS Generated Files
+# ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─────────────────────────────────────────────
+# LOGS
+# ─────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─────────────────────────────────────────────
+# OPTIONAL: Keep a .env.example to document
+# what variables are needed (no real values)
+# ─────────────────────────────────────────────
+# .env.example is intentionally NOT ignored

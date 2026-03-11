@@ -1,0 +1,471 @@
+<div class="h-screen bg-theme-bg text-theme-text flex flex-col overflow-hidden relative">
+
+    <!-- Pre-workout Check-in Overlay -->
+    <div *ngIf="showCheckIn()"
+        class="absolute inset-0 z-[100] bg-theme-bg flex items-center justify-center p-6 animate-in fade-in zoom-in-95 duration-500">
+        <div class="max-w-xl w-full space-y-12">
+            <div class="text-center space-y-4">
+                <h2 class="text-5xl font-black uppercase tracking-tight">Ready to <span
+                        class="text-theme-accent">Train?</span></h2>
+                <p class="text-theme-text-muted font-bold uppercase tracking-widest text-xs">Quick check-in to optimize
+                    your
+                    session</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Body Weight -->
+                <div class="bg-theme-card border border-theme-border rounded-2xl p-8 space-y-4">
+                    <label class="block text-[10px] font-black text-theme-text-muted uppercase tracking-widest">Today's
+                        Weight
+                        (kg)</label>
+                    <input type="number" [(ngModel)]="checkIn.weight" step="0.1"
+                        class="bg-transparent text-5xl font-black text-theme-text w-full focus:outline-none focus:text-theme-accent transition-colors">
+                </div>
+
+                <!-- Pain/Soreness -->
+                <button (click)="checkIn.pain = !checkIn.pain"
+                    [class]="checkIn.pain ? 'bg-rose-500/10 border-rose-500/50' : 'bg-theme-card border-theme-border'"
+                    class="rounded-2xl p-8 border transition-all text-left flex flex-col justify-between">
+                    <span class="text-[10px] font-black uppercase tracking-widest"
+                        [class]="checkIn.pain ? 'text-rose-500' : 'text-theme-text-muted'">Pain or Soreness?</span>
+                    <span class="text-2xl font-black  mt-4"
+                        [class]="checkIn.pain ? 'text-rose-100' : 'text-theme-text-muted'">
+                        {{checkIn.pain ? 'Yes, I have some' : 'Feeling Great'}}
+                    </span>
+                </button>
+
+                <!-- Sleep Quality -->
+                <div class="bg-theme-card border border-theme-border rounded-2xl p-8 space-y-6">
+                    <div class="flex justify-between items-center">
+                        <label class="text-[10px] font-black text-theme-text-muted uppercase tracking-widest">Sleep
+                            Quality</label>
+                        <span class="text-theme-accent font-black">{{checkIn.sleep}}/5</span>
+                    </div>
+                    <input type="range" min="1" max="5" [(ngModel)]="checkIn.sleep"
+                        class="w-full h-2 bg-theme-card-hover rounded-lg appearance-none cursor-pointer accent-violet-600">
+                </div>
+
+                <!-- Energy Level -->
+                <div class="bg-theme-card border border-theme-border rounded-2xl p-8 space-y-6">
+                    <div class="flex justify-between items-center">
+                        <label class="text-[10px] font-black text-theme-text-muted uppercase tracking-widest">Energy
+                            Level</label>
+                        <span class="text-theme-accent font-black">{{checkIn.energy}}/5</span>
+                    </div>
+                    <input type="range" min="1" max="5" [(ngModel)]="checkIn.energy"
+                        class="w-full h-2 bg-theme-card-hover rounded-lg appearance-none cursor-pointer accent-violet-600">
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <button (click)="startWorkout()" [disabled]="!checkIn.weight || checkIn.weight <= 0"
+                    class="w-full btn-primary py-6 text-xl tracking-tight disabled:opacity-50 disabled:cursor-not-allowed">
+                    START SESSION
+                </button>
+                <p *ngIf="!checkIn.weight || checkIn.weight <= 0"
+                    class="text-center text-rose-500 text-[10px] font-black uppercase tracking-widest animate-pulse">
+                    Please entry your current weight to begin
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post-workout Summary Overlay -->
+    <div *ngIf="showSummary()"
+        class="absolute inset-0 z-[100] bg-theme-bg flex items-center justify-center p-6 animate-in fade-in slide-in-from-bottom-8 duration-500">
+        <div
+            class="max-w-2xl w-full space-y-12 bg-theme-bg border border-theme-border rounded-[24px] p-12 lg:p-16  relative overflow-hidden">
+
+            <div class="relative z-10 space-y-12">
+                <div class="text-center space-y-4">
+                    <div
+                        class="w-20 h-20 bg-theme-card-hover rounded-2xl flex items-center justify-center mx-auto mb-6 text-emerald-500 animate-bounce">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h2 class="text-5xl font-black  uppercase tracking-tight leading-none text-emerald-500">
+                        Workout <span class="text-theme-text">Crushed</span></h2>
+                    <p class="text-theme-text-muted font-bold uppercase tracking-widest text-xs">You're one step closer
+                        to your
+                        goal</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center space-y-2">
+                        <p class="text-[9px] font-black text-theme-text-muted uppercase tracking-widest">Total Volume
+                        </p>
+                        <p class="text-2xl font-black ">{{totalVolume()}}kg</p>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <p class="text-[9px] font-black text-theme-text-muted uppercase tracking-widest">Exercises</p>
+                        <p class="text-2xl font-black ">{{selectedPlan()?.exercises?.length}}</p>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <p class="text-[9px] font-black text-theme-text-muted uppercase tracking-widest">Intensity</p>
+                        <p class="text-2xl font-black ">{{sessionRating()}}/10</p>
+                    </div>
+                    <div class="text-center space-y-2">
+                        <p class="text-[9px] font-black text-theme-text-muted uppercase tracking-widest">PRs Broken</p>
+                        <p class="text-2xl font-black  text-amber-400">2</p> <!-- Mocking for now -->
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <label
+                        class="block text-center text-[10px] font-black text-theme-text-muted uppercase tracking-widest">Rate
+                        this session</label>
+                    <div class="flex justify-center space-x-4">
+                        <button *ngFor="let r of [1,2,3,4,5,6,7,8,9,10]" (click)="sessionRating.set(r)"
+                            [class]="sessionRating() >= r ? 'bg-theme-accent border-theme-accent' : 'bg-theme-card-hover border-theme-border'"
+                            class="w-10 h-10 rounded-xl border font-bold text-sm transition-all">
+                            {{r}}
+                        </button>
+                    </div>
+                </div>
+
+                <button (click)="closeSummary()"
+                    class="w-full bg-white text-[#0a0b10] font-black py-6 rounded-2xl text-xl tracking-tight transition-all hover:bg-slate-200 active:scale-95">
+                    BACK TO DASHBOARD
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header: Global Actions -->
+    <header
+        class="h-20 border-b border-theme-border bg-theme-bg px-8 flex items-center justify-between flex-shrink-0 z-[50] relative">
+        <div class="flex items-center space-x-6">
+            <button (click)="goBack()"
+                class="p-2 hover:bg-theme-card-hover rounded-xl transition-colors text-theme-text-muted hover:text-theme-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 18-6-6 6-6" />
+                </svg>
+            </button>
+            <div class="h-8 w-px bg-theme-card-hover"></div>
+            <div>
+                <h1 class="text-xl font-black tracking-tight  uppercase">
+                    <span *ngIf="!selectedPlan()">Select <span class="text-theme-accent">Routine</span></span>
+                    <span *ngIf="selectedPlan()">{{selectedPlan()?.name}}</span>
+                </h1>
+                <p class="text-[10px] font-black uppercase tracking-widest text-theme-text-muted">Live Training
+                    Workspace</p>
+            </div>
+        </div>
+
+        <!-- Timer HUD -->
+        <div class="flex items-center space-x-4">
+            <div class="bg-theme-card border border-theme-border px-4 py-1.5 rounded-xl flex items-center space-x-3">
+                <button (click)="adjustRestTime(-15)"
+                    class="text-theme-text-muted hover:text-theme-text transition-colors text-xs font-bold">-15</button>
+                <div class="text-center min-w-[50px]">
+                    <p class="text-[7px] font-black text-theme-text-muted uppercase tracking-widest">Rest</p>
+                    <p class="text-xs font-bold">{{timerService.formatTime(customRestTime())}}</p>
+                </div>
+                <button (click)="adjustRestTime(15)"
+                    class="text-theme-text-muted hover:text-theme-text transition-colors text-xs font-bold">+15</button>
+            </div>
+
+            <div *ngIf="timerService.isActive()"
+                class="bg-theme-accent/10 border border-theme-accent/20 px-6 py-2 rounded-xl flex items-center space-x-4 ">
+                <div class="text-center">
+                    <p class="text-[8px] font-black text-theme-accent uppercase tracking-widest leading-none mb-0.5">
+                        Resting</p>
+                    <p class="text-xl font-black  tabular-nums leading-none">
+                        {{timerService.formatTime(timerService.timeLeft())}}</p>
+                </div>
+                <button (click)="timerService.stopTimer()" class="text-theme-accent hover:text-theme-accent">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <rect x="6" y="6" width="12" height="12" rx="2" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-1 flex overflow-hidden relative">
+
+        <!-- Sidebar: Exercise List -->
+        <aside *ngIf="selectedPlan()"
+            class="hidden lg:flex w-64 xl:w-72 border-r border-theme-border bg-theme-bg flex-col overflow-y-auto custom-scrollbar transition-all duration-300">
+            <div class="p-4 space-y-2">
+                <button *ngFor="let ex of selectedPlan()?.exercises; let i = index" (click)="selectExercise(i)"
+                    [class]="activeExerciseIndex() === i ? 'bg-theme-accent border-theme-accent ' : 'bg-theme-card-hover border-transparent hover:bg-theme-card-hover text-theme-text-muted'"
+                    class="w-full text-left p-4 rounded-2xl border transition-all group relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-[9px] font-black uppercase tracking-widest"
+                                [class]="activeExerciseIndex() === i ? 'text-theme-accent' : 'text-theme-text-muted'">Exercise
+                                {{i + 1}}</span>
+                            <div *ngIf="getLogsForExercise(ex.id!).length > 0" class="flex space-x-1">
+                                <div *ngFor="let s of getLogsForExercise(ex.id!)"
+                                    class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-sm truncate"
+                            [class]="activeExerciseIndex() === i ? 'text-theme-text' : 'text-theme-text'">{{ex.name}}
+                        </h3>
+                    </div>
+                    <div *ngIf="activeExerciseIndex() === i"
+                        class="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"></div>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden bg-theme-bg">
+
+            <!-- Focused Workout Screen -->
+            <div *ngIf="selectedPlan() && currentExercise()"
+                class="flex-1 flex flex-col lg:flex-row overflow-hidden animate-in fade-in duration-500">
+
+                <!-- Left Details & Logging -->
+                <div
+                    class="flex-1 p-4 sm:p-6 lg:p-8 xl:p-12 overflow-y-auto custom-scrollbar flex flex-col transition-all">
+                    <div class="max-w-3xl w-full mx-auto space-y-6 sm:space-y-8 lg:space-y-12">
+                        <!-- Heading -->
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span *ngIf="currentExercise()?.muscle_group"
+                                    class="bg-theme-accent/20 text-theme-accent text-[10px] font-black px-3 py-1 rounded-lg uppercase tracking-widest border border-theme-accent/20">
+                                    {{currentExercise()?.muscle_group}}
+                                </span>
+                                <div *ngIf="exerciseHistory()[currentExercise()!.id!] && exerciseHistory()[currentExercise()!.id!].length > 0"
+                                    class="flex bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-lg items-center space-x-2">
+                                    <span class="text-[9px] font-black text-amber-500 uppercase tracking-widest">Last
+                                        Performance</span>
+                                    <span class="text-[10px] font-bold text-amber-200">
+                                        {{exerciseHistory()[currentExercise()!.id!][0].weight}}kg ×
+                                        {{exerciseHistory()[currentExercise()!.id!][0].reps}}
+                                    </span>
+                                </div>
+                            </div>
+                            <h2 class="text-5xl font-black tracking-tight leading-none">
+                                {{currentExercise()?.name}}</h2>
+                            <p class="text-theme-text-muted font-bold uppercase tracking-widest text-xs">Target:
+                                {{currentExercise()?.target_sets}} Sets × {{currentExercise()?.target_reps}} Reps
+                                <span *ngIf="currentExercise()?.target_weight" class="text-theme-text-muted ml-1">(@
+                                    {{currentExercise()?.target_weight}}kg)</span>
+                            </p>
+                        </div>
+
+                        <!-- Main Logging Console -->
+                        <div class="card-elevated p-8 lg:p-10 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-10 opacity-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                            </div>
+
+                            <div class="relative z-10 space-y-10">
+                                <div class="flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-10">
+                                    <div class="flex items-center space-x-8 lg:space-x-12">
+                                        <div class="space-y-2">
+                                            <label
+                                                class="block text-[10px] font-black text-theme-text-muted uppercase tracking-widest ml-1">Reps</label>
+                                            <input type="number"
+                                                [(ngModel)]="exerciseInputs[currentExercise()!.id!].reps"
+                                                class="bg-transparent text-5xl lg:text-6xl font-black text-theme-text w-20 lg:w-24 focus:outline-none focus:text-theme-accent transition-colors">
+                                        </div>
+                                        <div class="w-px h-16 bg-theme-card-hover hidden md:block"></div>
+                                        <div class="space-y-2">
+                                            <label
+                                                class="block text-[10px] font-black text-theme-text-muted uppercase tracking-widest ml-1">Weight
+                                                kg</label>
+                                            <input type="number"
+                                                [(ngModel)]="exerciseInputs[currentExercise()!.id!].weight"
+                                                class="bg-transparent text-5xl lg:text-6xl font-black text-theme-text w-28 lg:w-32 focus:outline-none focus:text-theme-accent transition-colors">
+                                        </div>
+                                    </div>
+                                    <button (click)="logSet(currentExercise()!)"
+                                        class="w-full md:w-auto btn-primary px-10 lg:px-12 py-5 lg:py-6 text-xl tracking-tight">
+                                        LOG SET
+                                    </button>
+                                </div>
+
+                                <!-- RPE Slider -->
+                                <div class="space-y-4">
+                                    <div class="flex justify-between items-center px-1">
+                                        <label
+                                            class="text-[10px] font-black text-theme-text-muted uppercase tracking-widest">Effort
+                                            (RPE)</label>
+                                        <span
+                                            class="text-theme-accent font-black">{{exerciseInputs[currentExercise()!.id!].rpe}}/10</span>
+                                    </div>
+                                    <input type="range" min="1" max="10" step="0.5"
+                                        [(ngModel)]="exerciseInputs[currentExercise()!.id!].rpe"
+                                        class="w-full h-2 bg-theme-card-hover rounded-lg appearance-none cursor-pointer accent-violet-600">
+                                    <div
+                                        class="flex justify-between text-[8px] font-black text-theme-text-muted uppercase tracking-widest px-1">
+                                        <span>Recovery / Easy</span>
+                                        <span>Max Effort</span>
+                                    </div>
+                                </div>
+
+                                <!-- Set Notes Input -->
+                                <div class="relative">
+                                    <input type="text" [(ngModel)]="exerciseInputs[currentExercise()!.id!].notes"
+                                        placeholder="Add set notes (e.g. 'felt easy', 'left shoulder tight')..."
+                                        class="w-full bg-theme-bg border border-theme-border rounded-xl px-6 py-4 text-sm text-theme-text placeholder:text-theme-text-muted focus:outline-none focus:border-theme-accent transition-all">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sets History List -->
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-[10px] font-black text-theme-text-muted uppercase tracking-widest">
+                                    Active
+                                    Session Performance</h4>
+                                <div
+                                    class="bg-theme-accent/10 text-theme-accent px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-theme-accent/20">
+                                    {{getLogsForExercise(currentExercise()!.id!).length}} /
+                                    {{currentExercise()?.target_sets}} SETS
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                                <div *ngFor="let log of getLogsForExercise(currentExercise()!.id!); let idx = index"
+                                    class="bg-theme-card-hover border border-theme-border rounded-2xl p-6 relative group animate-in slide-in-from-bottom-4 duration-500">
+
+                                    <!-- PR Badge -->
+                                    <div *ngIf="log.is_pr"
+                                        class="absolute -top-2 -right-2 bg-amber-500 text-[#0a0b10] text-[8px] font-black px-2 py-1 rounded-lg  rotate-12 z-20 flex items-center space-x-1">
+                                        <span>🏆</span>
+                                        <span>NEW PR!</span>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <p
+                                            class="text-[9px] font-black text-theme-text-muted uppercase tracking-widest mb-1">
+                                            Set {{idx + 1}}</p>
+                                        <p class="text-2xl font-black ">{{log.reps}} <span
+                                                class="text-xs text-theme-text-muted">×</span> {{log.weight}}kg</p>
+                                        <div
+                                            class="mt-2 flex items-center justify-center space-x-2 text-[8px] font-black uppercase tracking-widest">
+                                            <span class="text-theme-text-muted">RPE</span>
+                                            <span class="text-theme-accent">{{log.rpe}}</span>
+                                        </div>
+                                        <p *ngIf="log.notes" class="mt-2 text-[10px] text-theme-text-muted italic mb-0">
+                                            "{{log.notes}}"</p>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="getLogsForExercise(currentExercise()!.id!).length < (currentExercise()?.target_sets || 0)"
+                                    class="border-2 border-dashed border-theme-border rounded-2xl p-6 flex flex-col items-center justify-center opacity-30 select-none">
+                                    <p class="text-[9px] font-black uppercase tracking-widest">Next Set</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="3" class="mt-2">
+                                        <line x1="12" y1="5" x2="12" y2="19" />
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Video Workspace -->
+                <div
+                    class="w-full lg:w-[320px] xl:w-[450px] bg-theme-bg border-l border-theme-border flex flex-col flex-shrink-0 transition-all duration-300">
+                    <div class="p-6 border-b border-theme-border flex items-center justify-between">
+                        <span class="text-[10px] font-black text-theme-text-muted uppercase tracking-widest">Training
+                            Reference</span>
+                        <div class="flex space-x-1">
+                            <div class="w-1.5 h-1.5 rounded-full bg-rose-500/50 animate-pulse"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-theme-accent-hover/50"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 p-6 flex flex-col">
+                        <div *ngIf="currentExercise()?.video_url" class="relative group flex-1 flex flex-col">
+                            <div
+                                class="flex-1 relative rounded-2xl overflow-hidden bg-black/50 border border-theme-border ">
+                                <ng-container
+                                    *ngIf="getEmbedUrl(currentExercise()?.video_url) as embedUrl; else noEmbed">
+                                    <iframe [src]="embedUrl | safe" class="absolute inset-0 w-full h-full border-0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen>
+                                    </iframe>
+                                </ng-container>
+                                <ng-template #noEmbed>
+                                    <div
+                                        class="absolute inset-0 flex flex-col items-center justify-center p-12 text-center space-y-4">
+                                        <div
+                                            class="w-16 h-16 bg-theme-card-hover rounded-2xl flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                class="text-theme-text-muted">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                                <polyline points="15 3 21 3 21 9" />
+                                                <line x1="10" y1="14" x2="21" y2="3" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-bold text-theme-text">External Video Provider</p>
+                                            <p
+                                                class="text-[10px] text-theme-text-muted font-bold uppercase tracking-widest">
+                                                Requires direct visit</p>
+                                        </div>
+                                        <a [href]="currentExercise()?.video_url" target="_blank"
+                                            class="px-6 py-3 bg-theme-card-hover hover:bg-theme-card-hover rounded-2xl text-xs font-black text-theme-accent transition-all border border-theme-border">
+                                            LAUNCH PLAYER
+                                        </a>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div *ngIf="!currentExercise()?.video_url"
+                            class="flex-1 border-2 border-dashed border-theme-border rounded-2xl flex flex-col items-center justify-center p-8 opacity-20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" class="mb-4">
+                                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
+                                <line x1="7" y1="2" x2="7" y2="22" />
+                                <line x1="17" y1="2" x2="17" y2="22" />
+                                <line x1="2" y1="12" x2="22" y2="12" />
+                                <line x1="2" y1="7" x2="7" y2="7" />
+                                <line x1="2" y1="17" x2="7" y2="17" />
+                                <line x1="17" y1="17" x2="22" y2="17" />
+                                <line x1="17" y1="7" x2="22" y2="7" />
+                            </svg>
+                            <p class="text-[10px] font-black uppercase tracking-widest">No Reference Available</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer: Session Controls -->
+    <footer *ngIf="selectedPlan()"
+        class="h-24 border-t border-theme-border bg-theme-bg px-12 flex items-center justify-between flex-shrink-0 z-50">
+        <button (click)="cancelWorkout()"
+            class="px-6 py-3 text-rose-500 font-black hover:bg-rose-500/10 rounded-2xl transition-all uppercase tracking-widest text-[10px]">
+            Discard Workout
+        </button>
+
+        <div class="flex items-center space-x-1">
+            <button *ngFor="let ex of selectedPlan()?.exercises; let i = index" (click)="selectExercise(i)"
+                class="w-10 h-10 rounded-xl font-bold text-xs transition-all border"
+                [class]="activeExerciseIndex() === i ? 'bg-theme-accent border-theme-accent text-theme-text' : 'bg-theme-card-hover border-theme-border text-theme-text-muted hover:text-theme-text'">
+                {{i + 1}}
+            </button>
+        </div>
+
+        <div class="flex items-center space-x-6">
+            <div class="text-right hidden md:block">
+                <p class="text-[9px] font-black text-theme-text-muted uppercase tracking-widest">Total Volume</p>
+                <p class="text-lg font-black ">{{totalVolume()}} kg</p>
+            </div>
+            <button (click)="finishWorkout()" [disabled]="sessionLogs().length === 0"
+                class="disabled:opacity-50 disabled:grayscale px-10 py-5 btn-primary font-black uppercase tracking-widest text-xs transition-all">
+                Submit Training Session
+            </button>
+        </div>
+    </footer>
+</div>

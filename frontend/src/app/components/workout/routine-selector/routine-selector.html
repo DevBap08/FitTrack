@@ -1,0 +1,105 @@
+<div class="flex-1 min-h-0 p-8 lg:p-12 overflow-y-auto custom-scrollbar bg-theme-bg">
+    <div class="max-w-5xl mx-auto space-y-8">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-theme-border">
+            <div class="space-y-1">
+                <h1 class="text-2xl font-semibold tracking-tight text-theme-text">
+                    Routine Library
+                </h1>
+                <p class="text-theme-text-muted text-sm">Manage and start your training sessions.</p>
+            </div>
+            <button (click)="createNew()"
+                class="btn-primary px-4 py-2 text-sm flex items-center justify-center space-x-2 w-full sm:w-auto self-start">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Create Plan</span>
+            </button>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div *ngFor="let plan of workoutService.plans()" (click)="selectPlan(plan)"
+                class="card-elevated p-5 cursor-pointer flex flex-col justify-between min-h-[160px] group relative focus:outline-none focus:border-theme-accent">
+
+                <div class="space-y-4">
+                    <div class="flex items-start justify-between">
+                        <div
+                            class="w-10 h-10 bg-theme-accent/10 rounded-lg flex items-center justify-center text-theme-accent">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m5 11 4-7" />
+                                <path d="m19 11-4-7" />
+                                <path d="M2 11h20" />
+                                <path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8c.9 0 1.8-.7 2-1.6l1.7-7.4" />
+                                <path d="m9 11 1 9" />
+                                <path d="M4.5 15.5h15" />
+                                <path d="m15 11-1 9" />
+                            </svg>
+                        </div>
+                        <div class="flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button (click)="editPlan($event, plan.id!)"
+                                class="p-2 text-theme-text-muted hover:text-theme-accent hover:bg-theme-card-hover rounded-md transition-colors"
+                                title="Edit Plan">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                </svg>
+                            </button>
+                            <button (click)="deletePlan($event, plan.id!)"
+                                class="p-2 text-theme-text-muted hover:text-rose-500 hover:bg-theme-card-hover rounded-md transition-colors"
+                                title="Delete Plan">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 6h18" />
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-medium text-theme-text mb-1 leading-tight">{{plan.name}}</h3>
+                        <p class="text-[13px] text-theme-text-muted">
+                            {{plan.exercises.length}} exercise{{plan.exercises.length !== 1 ? 's' : ''}}
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-4 pt-4 border-t border-theme-border flex items-center text-[13px] font-medium text-theme-text-muted group-hover:text-theme-accent transition-colors gap-2">
+                    <span>Start Workout</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="translate-x-0 group-hover:translate-x-1 transition-transform">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <button (click)="createNew()" *ngIf="workoutService.plans().length === 0"
+                class="card-elevated border-dashed border-2 p-8 flex flex-col items-center justify-center space-y-4 hover:border-theme-accent hover:bg-theme-card-hover transition-colors group min-h-[160px]">
+                <div
+                    class="w-12 h-12 rounded-lg bg-theme-bg flex items-center justify-center text-theme-text-muted group-hover:text-theme-accent transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+                <p class="text-theme-text-muted text-sm font-medium">Create your first routine</p>
+            </button>
+        </div>
+    </div>
+</div>

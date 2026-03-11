@@ -1,0 +1,116 @@
+/* Animations for live logging */
+@keyframes pulse-violet {
+    0%, 100% { border-color: rgba(139, 92, 246, 0.2); }
+    50% { border-color: rgba(139, 92, 246, 0.6); }
+}
+
+.animate-pulse-violet {
+    animation: pulse-violet 2s infinite;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Custom Scrollbar for Workspace */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.2);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.4);
+}
+
+/* Slide in animation for sets */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: slideInUp 0.4s ease-out forwards;
+}
+
+/* Fluid Typography and Padding for Workspace */
+@media (max-width: 1440px) {
+    .text-6xl { font-size: 4rem; }
+    .text-5xl { font-size: 3rem; }
+}
+
+@media (max-width: 1280px) {
+    .text-6xl { font-size: 3rem; line-height: 1; }
+    .text-5xl { font-size: 2.25rem; line-height: 1.1; }
+    .p-10 { padding: 1.5rem; }
+    .rounded-\[48px\] { border-radius: 2rem; }
+    .space-x-12 { margin-left: 1.5rem; margin-right: 1.5rem; }
+}
+
+@media (max-width: 1024px) {
+    .text-6xl { font-size: 2.5rem; }
+    .text-5xl { font-size: 1.75rem; }
+    .p-8 { padding: 1rem; }
+    
+    /* When stacked, limit video height and adjust borders */
+    .lg\:w-\[320px\] {
+        height: 35vh;
+        min-height: 250px;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* Phase 8 UI Enhancements */
+.animate-pulse-violet {
+    animation: pulse-violet 2s infinite;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #8b5cf6;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+    margin-top: -6px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
+    50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); }
+}
