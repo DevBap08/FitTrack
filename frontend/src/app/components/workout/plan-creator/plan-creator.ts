@@ -22,6 +22,7 @@ export class PlanCreatorComponent {
 
     isEditMode = false;
     planId: number | null = null;
+    pastExercises: Exercise[] = [];
 
     planForm = this.fb.group({
         name: ['', [Validators.required]],
@@ -35,14 +36,34 @@ export class PlanCreatorComponent {
                 this.planId = +params['id'];
                 this.loadPlan(this.planId);
             } else {
+                this.loadPastExercises();
                 // Add an initial exercise for new plans
                 this.addExercise();
             }
         });
     }
 
+    loadPastExercises() {
+        this.workoutService.fetchPlans().subscribe(plans => {
+            this.extractUniqueExercises(plans);
+        });
+    }
+
+    extractUniqueExercises(plans: any[]) {
+        const uniqueMap = new Map<string, Exercise>();
+        // Process oldest to newest so newest overwrites and we get the latest properties
+        plans.forEach(plan => {
+            (plan.exercises || []).forEach((ex: Exercise) => {
+                const key = ex.name.toLowerCase().trim();
+                uniqueMap.set(key, ex);
+            });
+        });
+        this.pastExercises = Array.from(uniqueMap.values());
+    }
+
     loadPlan(id: number) {
         this.workoutService.fetchPlans().subscribe(plans => {
+            this.extractUniqueExercises(plans);
             const plan = plans.find(p => p.id === id);
             if (plan) {
                 this.planForm.patchValue({ name: plan.name });
@@ -79,6 +100,26 @@ export class PlanCreatorComponent {
 
     removeExercise(index: number) {
         this.exercises.removeAt(index);
+    }
+
+    onExerciseSelect(index: number) {
+        const control = this.exercises.at(index);
+        const nameValue = control.get('name')?.value;
+        if (!nameValue) return;
+
+        const match = this.pastExercises.find(
+            ex => ex.name.toLowerCase().trim() === nameValue.toLowerCase().trim()
+        );
+
+        if (match) {
+            control.patchValue({
+                muscle_group: match.muscle_group || 'Chest',
+                video_url: match.video_url || '',
+                target_sets: match.target_sets || 3,
+                target_reps: match.target_reps || 10,
+                target_weight: match.target_weight || 0
+            });
+        }
     }
 
     moveExercise(index: number, direction: 'up' | 'down') {

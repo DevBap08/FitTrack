@@ -1,14 +1,17 @@
 <div class="flex-1 min-h-0 p-8 lg:p-12 overflow-y-auto custom-scrollbar">
     <div class="max-w-4xl mx-auto space-y-8">
-        <!-- Header -->
-        <div class="flex items-center justify-between">
-            <div class="space-y-1">
-                <h1 class="text-4xl font-extrabold tracking-tight  uppercase">Create Workout <span
-                        class=" text-theme-accent">Plan</span>
-                </h1>
-                <p class="text-slate-400 font-medium italic">Design your routine and sets targets for the AI coach.</p>
-            </div>
+        <div class="mb-10 lg:mb-12">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight mb-2 flex flex-col">
+                <span class="text-white drop-shadow-sm">{{isEditMode ? 'EDIT WORKOUT' : 'CREATE WORKOUT'}} <span
+                        class="text-theme-accent">PLAN</span></span>
+            </h1>
+            <p class="text-theme-text-muted font-bold text-xs uppercase tracking-widest">{{isEditMode ? 'Update your
+                routine settings.' : 'Design your routine and sets targets for the AI coach.'}}</p>
         </div>
+
+        <datalist id="past-exercises">
+            <option *ngFor="let pEx of pastExercises" [value]="pEx.name"></option>
+        </datalist>
 
         <!-- Form -->
         <form [formGroup]="planForm" (ngSubmit)="onSubmit()" class="space-y-8">
@@ -67,7 +70,8 @@
                                 <label
                                     class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-2">Name</label>
                                 <input type="text" formControlName="name" placeholder="Bench Press"
-                                    class="w-full bg-theme-card-hover border border-theme-border rounded-xl px-4 py-2.5 text-theme-text focus:outline-none focus:border-theme-accent border focus:border-theme-accent">
+                                    list="past-exercises" (change)="onExerciseSelect(i)"
+                                    class="w-full bg-theme-card-hover border border-theme-border rounded-xl px-4 py-2.5 text-theme-text focus:outline-none focus:border-theme-accent border focus:border-theme-accent shadow-inner">
                             </div>
 
                             <!-- Muscle Group -->
