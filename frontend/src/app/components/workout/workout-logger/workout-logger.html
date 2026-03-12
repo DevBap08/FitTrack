@@ -190,7 +190,7 @@
     <main class="flex-1 flex overflow-hidden relative">
 
         <!-- Sidebar: Exercise List -->
-        <aside *ngIf="selectedPlan()"
+        <aside *ngIf="workoutStarted() && selectedPlan()"
             class="hidden lg:flex w-64 xl:w-72 border-r border-theme-border bg-theme-bg flex-col overflow-y-auto custom-scrollbar transition-all duration-300">
             <div class="p-4 space-y-2">
                 <button *ngFor="let ex of selectedPlan()?.exercises; let i = index" (click)="selectExercise(i)"
@@ -220,7 +220,7 @@
         <div class="flex-1 flex flex-col overflow-hidden bg-theme-bg">
 
             <!-- Focused Workout Screen -->
-            <div *ngIf="selectedPlan() && currentExercise()"
+            <div *ngIf="workoutStarted() && selectedPlan() && currentExercise()"
                 class="flex-1 flex flex-col lg:flex-row overflow-hidden animate-in fade-in duration-500">
 
                 <!-- Left Details & Logging -->
@@ -442,7 +442,7 @@
     </main>
 
     <!-- Footer: Session Controls -->
-    <footer *ngIf="selectedPlan()"
+    <footer *ngIf="workoutStarted() && selectedPlan()"
         class="h-24 border-t border-theme-border bg-theme-bg px-12 flex items-center justify-between flex-shrink-0 z-50">
         <button (click)="cancelWorkout()"
             class="px-6 py-3 text-rose-500 font-black hover:bg-rose-500/10 rounded-2xl transition-all uppercase tracking-widest text-[10px]">
