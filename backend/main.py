@@ -38,10 +38,16 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 @app.post("/register", response_model=schemas.User)
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = db.query(models.User).filter(models.User.email == user.email).first()
-    if db_user:
+    # Check for existing email
+    db_user_email = db.query(models.User).filter(models.User.email == user.email).first()
+    if db_user_email:
         raise HTTPException(status_code=400, detail="Email already registered")
     
+    # Check for existing username
+    db_user_name = db.query(models.User).filter(models.User.username == user.username).first()
+    if db_user_name:
+        raise HTTPException(status_code=400, detail="Username already taken")
+
     hashed_pwd = auth.get_password_hash(user.password)
     new_user = models.User(
         username=user.username,

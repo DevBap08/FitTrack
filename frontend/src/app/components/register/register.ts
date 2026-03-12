@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -22,15 +22,20 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(71)]]
   });
 
+  isLoading = signal(false);
   error: string | null = null;
 
   onSubmit() {
     if (this.registerForm.valid) {
+      this.isLoading.set(true);
+      this.error = null;
       this.authService.register(this.registerForm.value).subscribe({
         next: () => {
+          this.isLoading.set(false);
           this.router.navigate(['/login']);
         },
         error: (err) => {
+          this.isLoading.set(false);
           this.error = err.error?.detail || 'Registration failed. Please try again.';
           console.error('Registration error', err);
         }

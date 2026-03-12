@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -21,15 +21,20 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.maxLength(71)]]
   });
 
+  isLoading = signal(false);
   error: string | null = null;
 
   onSubmit() {
     if (this.loginForm.valid) {
+      this.isLoading.set(true);
+      this.error = null;
       this.authService.login(this.loginForm.value).subscribe({
         next: () => {
+          this.isLoading.set(false);
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
+          this.isLoading.set(false);
           this.error = 'Invalid username or password';
           console.error('Login error', err);
         }
