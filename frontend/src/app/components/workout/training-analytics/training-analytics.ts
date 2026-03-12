@@ -7,16 +7,16 @@ import { WorkoutService } from '../../../services/workout';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="h-full flex flex-col bg-[#0a0b10] overflow-hidden p-6 lg:p-12 space-y-12">
+    <div class="h-full flex flex-col bg-[#0a0b10] overflow-hidden p-4 sm:p-8 lg:p-12 space-y-8 lg:space-y-12">
       <div class="flex items-baseline space-x-3">
-        <h2 class="text-4xl font-black text-white tracking-tight font-display italic uppercase">Training <span class="text-indigo-400">Analytics</span></h2>
-        <span class="text-slate-500 font-bold text-lg lowercase">trends & optimization</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight font-display italic uppercase">Training <span class="text-indigo-400">Analytics</span></h2>
+        <span class="text-slate-500 font-bold text-sm sm:text-lg lowercase">trends & optimization</span>
       </div>
 
       <div class="flex-1 min-h-0 overflow-y-auto custom-scrollbar pr-2 space-y-12">
         <!-- Top Statistics Row -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="card-elevated p-8 bg-violet-600/5 border-violet-500/10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+          <div class="card-elevated p-5 sm:p-8 bg-violet-600/5 border-violet-500/10">
             <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Total Training Volume</h3>
             <div class="flex items-end space-x-3">
               <span class="text-5xl font-black text-white font-outfit">{{totalLifetimeVolume()}}</span>
@@ -24,25 +24,25 @@ import { WorkoutService } from '../../../services/workout';
             </div>
           </div>
           
-          <div class="card-elevated p-8 bg-emerald-600/5 border-emerald-500/10">
+          <div class="card-elevated p-5 sm:p-8 bg-emerald-600/5 border-emerald-500/10">
             <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Personal Records</h3>
             <div class="flex items-end space-x-3">
-              <span class="text-5xl font-black text-white font-outfit">{{totalPRCount()}}</span>
+              <span class="text-3xl sm:text-5xl font-black text-white font-outfit">{{totalPRCount()}}</span>
               <span class="text-emerald-400 font-black text-xs mb-2 uppercase italic tracking-widest">broken</span>
             </div>
           </div>
 
-          <div class="card-elevated p-8 bg-indigo-600/5 border-indigo-500/10">
+          <div class="card-elevated p-5 sm:p-8 bg-indigo-600/5 border-indigo-500/10">
             <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6">Avg Intensity</h3>
             <div class="flex items-end space-x-3">
-              <span class="text-5xl font-black text-white font-outfit">{{avgRating()}}</span>
+              <span class="text-3xl sm:text-5xl font-black text-white font-outfit">{{avgRating()}}</span>
               <span class="text-indigo-400 font-black text-xs mb-2 uppercase italic tracking-widest">/ 10 rating</span>
             </div>
           </div>
         </div>
 
         <!-- Strength Trend (CSS Chart) -->
-        <div class="card-elevated p-10 space-y-10 group">
+        <div class="card-elevated p-6 sm:p-10 space-y-8 lg:space-y-10 group">
           <div class="flex items-center justify-between">
             <div>
                <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-2">Strength Trend</h3>
@@ -72,9 +72,9 @@ import { WorkoutService } from '../../../services/workout';
         </div>
 
         <!-- AI Forecast Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-           <div class="card-elevated p-8 border-violet-500/20 bg-gradient-to-br from-violet-600/[0.03] to-indigo-600/[0.03]">
-              <div class="flex items-center space-x-4 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+           <div class="card-elevated p-6 sm:p-8 border-violet-500/20 bg-gradient-to-br from-violet-600/[0.03] to-indigo-600/[0.03]">
+              <div class="flex items-center space-x-4 mb-6 sm:mb-8">
                  <span class="text-3xl">🔱</span>
                  <h3 class="text-lg font-black font-outfit uppercase">AI Progression Plan</h3>
               </div>
@@ -86,9 +86,9 @@ import { WorkoutService } from '../../../services/workout';
               </ul>
            </div>
 
-           <div class="card-elevated p-8 border-amber-500/10">
-              <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-8">Muscle Fatigue Map (Live)</h3>
-              <div class="grid grid-cols-2 gap-6">
+           <div class="card-elevated p-6 sm:p-8 border-amber-500/10">
+              <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-6 sm:mb-8">Muscle Fatigue Map (Live)</h3>
+              <div class="grid grid-cols-2 gap-4 sm:gap-6">
                  <div *ngFor="let muscle of ['Legs', 'Back', 'Chest', 'Arms']" class="space-y-2">
                     <div class="flex justify-between text-[10px] font-black">
                        <span class="text-slate-400 uppercase">{{muscle}}</span>

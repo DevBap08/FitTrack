@@ -1,5 +1,5 @@
-<div class="flex-1 min-h-0 p-8 lg:p-12 overflow-y-auto custom-scrollbar bg-theme-bg">
-    <div class="max-w-5xl mx-auto space-y-8">
+<div class="flex-1 min-h-0 p-4 sm:p-8 lg:p-12 overflow-y-auto custom-scrollbar bg-theme-bg">
+    <div class="max-w-5xl mx-auto space-y-6 lg:space-y-8">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-theme-border">
             <div class="space-y-1">
@@ -20,9 +20,9 @@
         </div>
 
         <!-- Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
             <div *ngFor="let plan of workoutService.plans()" (click)="selectPlan(plan)"
-                class="card-elevated p-5 cursor-pointer flex flex-col justify-between min-h-[160px] group relative focus:outline-none focus:border-theme-accent">
+                class="card-elevated p-4 sm:p-5 cursor-pointer flex flex-col justify-between min-h-[160px] group relative focus:outline-none focus:border-theme-accent">
 
                 <div class="space-y-4">
                     <div class="flex items-start justify-between">

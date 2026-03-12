@@ -9,12 +9,12 @@ import { ProfileService } from '../../../services/profile';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   template: `
-    <div class="flex-1 min-h-0 p-8 lg:p-12 overflow-y-auto custom-scrollbar">
-      <div class="max-w-6xl mx-auto space-y-12">
+    <div class="flex-1 min-h-0 p-6 lg:p-12 overflow-y-auto custom-scrollbar">
+      <div class="max-w-6xl mx-auto space-y-8 lg:space-y-12">
         <!-- Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div class="space-y-4">
-            <h2 class="text-5xl font-black text-white tracking-tight font-display italic uppercase">Calorie <span class="text-emerald-400">Log</span></h2>
+            <h2 class="text-4xl lg:text-5xl font-black text-white tracking-tight font-display italic uppercase">Calorie <span class="text-emerald-400">Log</span></h2>
             <p class="text-slate-400 font-medium italic">Track your macros and stay within your calculated daily limits.</p>
           </div>
           
@@ -95,7 +95,7 @@ import { ProfileService } from '../../../services/profile';
 
           <!-- Sidebar: Logging Form -->
           <aside class="space-y-8">
-            <div class="card-elevated p-8 bg-emerald-500/[0.02] border-emerald-500/10 space-y-8">
+            <div class="card-elevated p-6 lg:p-8 bg-emerald-500/[0.02] border-emerald-500/10 space-y-6 lg:space-y-8">
               <div class="space-y-2">
                 <h3 class="text-xs font-black text-emerald-400 uppercase tracking-[0.3em]">Log Intake</h3>
                 <p class="text-slate-500 text-[10px] font-medium leading-relaxed uppercase tracking-tighter italic">Quickly track your macros based on precise weight.</p>
@@ -153,8 +153,8 @@ import { ProfileService } from '../../../services/profile';
             </div>
             
             <!-- Quick Summary Card -->
-            <div class="card-elevated p-8 bg-indigo-600/5 group">
-              <h3 class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-6 italic underline underline-offset-8 decoration-white/5">Coach Insights</h3>
+            <div class="card-elevated p-6 lg:p-8 bg-indigo-600/5 group">
+              <h3 class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-4 lg:mb-6 italic underline underline-offset-8 decoration-white/5">Coach Insights</h3>
               <p class="text-xs text-slate-400 leading-relaxed italic">Your protein intake is currently at <span class="text-emerald-400 font-bold">{{proteinPercent()}}%</span> of your target. Consider adding lean protein to your next meal to optimize recovery.</p>
             </div>
           </aside>

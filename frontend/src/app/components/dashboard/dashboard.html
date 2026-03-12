@@ -3,9 +3,9 @@
     <div class="flex-1 max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[340px_1fr_300px] gap-0">
 
         <!-- Left Sidebar: Date, Add Task, Stats -->
-        <aside class="p-8 border-r border-theme-border space-y-10">
+        <aside class="p-4 sm:p-6 lg:p-8 border-r border-theme-border space-y-8 lg:space-y-10">
             <div>
-                <h2 class="text-3xl font-semibold mb-1 text-white tracking-tight">
+                <h2 class="text-2xl sm:text-3xl font-semibold mb-1 text-white tracking-tight">
                     {{currentDate}}</h2>
                 <p class="text-theme-accent font-medium text-xs tracking-wide">{{fullDate}} · Daily Overview</p>
             </div>
@@ -40,7 +40,7 @@
         </aside>
 
         <!-- Center Content: Main Workspace -->
-        <main class="p-10 space-y-10">
+        <main class="p-4 sm:p-8 lg:p-10 space-y-8 lg:space-y-10">
 
             <!-- Tab: Workout Analytics (Phase 8) -->
             <div *ngIf="activeTab === 'Workout'" class="space-y-10 animate-in fade-in duration-500">
@@ -64,58 +64,64 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-rows-7 grid-flow-col gap-[5px] pt-2 overflow-x-auto pb-2 custom-scrollbar">
-                        <div *ngFor="let day of heatmapDays()" [title]="day.date"
-                            [class]="day.intensity > 0 ? 'bg-theme-accent' : 'bg-theme-border'"
-                            class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-[3px] transition-colors hover:scale-110 cursor-pointer">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Strength to Weight Ratio -->
-                    <div class="card-elevated p-6 space-y-6 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider mb-5">
-                                Strength-to-Weight Ratio</h3>
-                            <div class="flex items-baseline space-x-3">
-                                <span class="text-4xl font-bold text-white">1.24</span>
-                                <span class="text-theme-text font-medium text-sm">x BW Bench</span>
-                            </div>
-                        </div>
-                        <!-- Mock Mini Chart -->
-                        <div class="h-16 flex items-end justify-between gap-1.5 mt-4">
-                            <div *ngFor="let h of [40, 45, 42, 50, 55, 52, 65, 70, 68, 85]" [style.height.%]="h"
-                                class="w-full bg-theme-accent rounded-t-[2px] opacity-40 hover:opacity-100 transition-opacity duration-300">
+                    <div class="w-full overflow-hidden">
+                        <div
+                            class="grid grid-rows-7 grid-flow-col gap-[5px] pt-2 overflow-x-auto pb-2 custom-scrollbar min-w-0">
+                            <div *ngFor="let day of heatmapDays()" [title]="day.date"
+                                [class]="day.intensity > 0 ? 'bg-theme-accent' : 'bg-theme-border'"
+                                class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-[3px] transition-colors hover:scale-110 cursor-pointer">
                             </div>
                         </div>
                     </div>
 
-                    <!-- 1RM Estimator Hub -->
-                    <div class="card-elevated p-6 flex flex-col justify-between space-y-4">
-                        <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Estimated
-                            Max
-                            Effort</h3>
-                        <div class="space-y-4 pt-2">
-                            <div *ngFor="let lift of [{n: 'Squat', v: '145'}, {n: 'Deadlift', v: '180'}, {n: 'Bench', v: '102'}]"
-                                class="flex items-center justify-between border-b border-theme-border pb-3 last:border-0 last:pb-0">
-                                <span class="text-sm font-medium text-theme-text">{{lift.n}}</span>
-                                <span class="text-lg font-bold text-white">{{lift.v}}<span
-                                        class="text-[11px] text-theme-text-muted ml-1 font-medium">kg</span></span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Strength to Weight Ratio -->
+                        <div class="card-elevated p-6 space-y-6 flex flex-col justify-between">
+                            <div>
+                                <h3
+                                    class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider mb-5">
+                                    Strength-to-Weight Ratio</h3>
+                                <div class="flex items-baseline space-x-3">
+                                    <span class="text-4xl font-bold text-white">1.24</span>
+                                    <span class="text-theme-text font-medium text-sm">x BW Bench</span>
+                                </div>
+                            </div>
+                            <!-- Mock Mini Chart -->
+                            <div class="h-16 flex items-end justify-between gap-1.5 mt-4">
+                                <div *ngFor="let h of [40, 45, 42, 50, 55, 52, 65, 70, 68, 85]" [style.height.%]="h"
+                                    class="w-full bg-theme-accent rounded-t-[2px] opacity-40 hover:opacity-100 transition-opacity duration-300">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 1RM Estimator Hub -->
+                        <div class="card-elevated p-6 flex flex-col justify-between space-y-4">
+                            <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">
+                                Estimated
+                                Max
+                                Effort</h3>
+                            <div class="space-y-4 pt-2">
+                                <div *ngFor="let lift of [{n: 'Squat', v: '145'}, {n: 'Deadlift', v: '180'}, {n: 'Bench', v: '102'}]"
+                                    class="flex items-center justify-between border-b border-theme-border pb-3 last:border-0 last:pb-0">
+                                    <span class="text-sm font-medium text-theme-text">{{lift.n}}</span>
+                                    <span class="text-lg font-bold text-white">{{lift.v}}<span
+                                            class="text-[11px] text-theme-text-muted ml-1 font-medium">kg</span></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="flex justify-start">
-                    <button routerLink="/workout/select"
-                        class="btn-primary px-6 py-3 shadow-sm hover:shadow-md transition-all text-sm font-medium flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                        </svg>
-                        <span>Start New Training Session</span>
-                    </button>
+                    <div class="flex justify-start">
+                        <button routerLink="/workout/select"
+                            class="btn-primary px-6 py-3 shadow-sm hover:shadow-md transition-all text-sm font-medium flex items-center space-x-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                            <span>Start New Training Session</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -128,7 +134,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="card-elevated p-6 space-y-4">
-                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Consumed
+                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">
+                            Consumed
                         </h4>
                         <div class="flex items-baseline space-x-2">
                             <span class="text-3xl font-bold text-white">{{calorieProgress().consumed}}</span>
@@ -136,7 +143,8 @@
                         </div>
                     </div>
                     <div class="card-elevated p-6 space-y-4">
-                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Remaining
+                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">
+                            Remaining
                         </h4>
                         <div class="flex items-baseline space-x-2">
                             <span class="text-3xl font-bold text-white">{{calorieProgress().target -
@@ -165,7 +173,7 @@
         </main>
 
         <!-- Right Sidebar: Calendar, Quick Links -->
-        <aside class="p-8 border-l border-theme-border bg-theme-bg space-y-10 h-full">
+        <aside class="p-4 sm:p-6 lg:p-8 border-l border-theme-border bg-theme-bg space-y-8 lg:space-y-10 h-full">
             <div class="space-y-5">
                 <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider mb-2">Calendar</h3>
                 <div class="card-elevated p-5">

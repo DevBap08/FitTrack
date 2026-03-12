@@ -13,7 +13,5 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         return next(cloned);
     }
 
-    console.warn('AuthInterceptor: No token found for request', req.url);
-
     return next(req);
 };

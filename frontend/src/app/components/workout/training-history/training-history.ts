@@ -7,15 +7,15 @@ import { WorkoutService, WorkoutSession } from '../../../services/workout';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="h-full flex flex-col bg-[#0a0b10] overflow-hidden p-6 lg:p-12 space-y-10">
+    <div class="h-full flex flex-col bg-[#0a0b10] overflow-hidden p-4 sm:p-8 lg:p-12 space-y-8 lg:space-y-10">
       <div class="flex items-baseline space-x-3">
-        <h2 class="text-4xl font-black text-white tracking-tight font-display italic uppercase">Training <span class="text-violet-400">History</span></h2>
-        <span class="text-slate-500 font-bold text-lg lowercase">summaries & details</span>
+        <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight font-display italic uppercase">Training <span class="text-violet-400">History</span></h2>
+        <span class="text-slate-500 font-bold text-sm sm:text-lg lowercase">summaries & details</span>
       </div>
 
       <div class="flex-1 min-h-0 overflow-y-auto custom-scrollbar space-y-6 pr-2">
         <div *ngFor="let session of sessions()" 
-             class="card-elevated group p-8 hover:bg-[#12131a] transition-all border-white/5 hover:border-violet-500/20 relative overflow-hidden">
+             class="card-elevated group p-5 sm:p-8 hover:bg-[#12131a] transition-all border-white/5 hover:border-violet-500/20 relative overflow-hidden">
           
           <div class="relative z-10">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
@@ -48,7 +48,7 @@ import { WorkoutService, WorkoutSession } from '../../../services/workout';
             </div>
 
             <!-- AI Suggestion Hub -->
-            <div class="bg-violet-600/5 border border-violet-500/10 rounded-3xl p-6 mb-8 flex items-center space-x-4">
+            <div class="bg-violet-600/5 border border-violet-500/10 rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-8 flex items-center space-x-4">
                <div class="w-10 h-10 bg-violet-600/20 rounded-xl flex items-center justify-center text-xl">🤖</div>
                <div>
                   <p class="text-[9px] font-black text-violet-400 uppercase tracking-[0.2em] mb-1">AI Training Insight</p>
@@ -57,7 +57,7 @@ import { WorkoutService, WorkoutSession } from '../../../services/workout';
             </div>
 
             <!-- Health Metrics Row -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/5 rounded-3xl p-6 border border-white/5 mb-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/5 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white/5 mb-8">
               <div class="text-center md:text-left">
                 <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Sleep</p>
                 <p class="text-sm font-bold text-violet-200">{{session.sleep_quality}}/5</p>

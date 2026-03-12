@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   template: `
-    <div class="flex-1 min-h-0 p-8 lg:p-12 overflow-y-auto custom-scrollbar">
-      <div class="max-w-4xl mx-auto space-y-12">
+    <div class="flex-1 min-h-0 p-6 lg:p-12 overflow-y-auto custom-scrollbar">
+      <div class="max-w-4xl mx-auto space-y-8 lg:space-y-12">
         <!-- Header -->
         <div class="space-y-4 mt-6 lg:mt-0">
           <h2 class="text-4xl lg:text-5xl font-black text-white tracking-tight font-display italic uppercase">Health <span class="text-indigo-400">Profile</span></h2>
@@ -22,8 +22,8 @@ import { Router } from '@angular/router';
           <!-- Setup Form -->
           <div class="space-y-8">
             <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="space-y-8">
-              <div class="card-elevated p-8 bg-white/[0.02] border-white/5 space-y-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="card-elevated p-6 lg:p-8 bg-white/[0.02] border-white/5 space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                   <!-- Age Field -->
                   <div class="space-y-3">
                     <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest">Your Age</label>
@@ -92,18 +92,18 @@ import { Router } from '@angular/router';
             </form>
           </div>
 
-          <!-- Live Results / Preview -->
+           <!-- Live Results / Preview -->
           <div class="space-y-8">
-             <div class="card-elevated p-8 space-y-8 relative overflow-hidden group border border-theme-border bg-theme-bg">
+             <div class="card-elevated p-6 lg:p-8 space-y-8 relative overflow-hidden group border border-theme-border bg-theme-bg">
                <div class="relative z-10">
-                 <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-6">Calculated BMI</h3>
+                 <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4 lg:mb-6">Calculated BMI</h3>
                  <div class="flex items-end space-x-3">
-                   <span class="text-6xl font-black text-white font-outfit">{{calculatedBMI()}}</span>
-                   <span class="text-indigo-400 font-black text-xs mb-2 uppercase tracking-widest">{{bmiStatus()}}</span>
+                   <span class="text-5xl lg:text-6xl font-black text-white font-outfit">{{calculatedBMI()}}</span>
+                   <span class="text-indigo-400 font-black text-xs mb-1 lg:mb-2 uppercase tracking-widest">{{bmiStatus()}}</span>
                  </div>
                </div>
 
-               <div class="pt-8 border-t border-white/5 space-y-6">
+               <div class="pt-6 lg:pt-8 border-t border-white/5 space-y-6">
                  <div>
                    <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4">Daily TDEE</h3>
                    <div class="flex items-baseline space-x-2">
@@ -115,7 +115,7 @@ import { Router } from '@angular/router';
                 <div class="p-6 bg-emerald-500/[0.03] border border-emerald-500/10 rounded-2xl">
                    <h3 class="text-[10px] font-black text-emerald-500/60 uppercase tracking-[0.2em] mb-3">Daily Calorie Target</h3>
                    <div class="flex items-baseline space-x-2">
-                     <span class="text-4xl font-black text-white font-outfit">{{profileService.profile()?.calorie_target | number:'1.0-0'}}</span>
+                     <span class="text-3xl lg:text-4xl font-black text-white font-outfit">{{profileService.profile()?.calorie_target | number:'1.0-0'}}</span>
                      <span class="text-emerald-400 font-bold text-xs uppercase italic">kcal</span>
                    </div>
                  </div>
@@ -123,7 +123,7 @@ import { Router } from '@angular/router';
              </div>
 
              <!-- BMI Reference Table -->
-             <div class="card-elevated p-8 bg-white/[0.02] border-white/5 space-y-6">
+             <div class="card-elevated p-6 lg:p-8 bg-white/[0.02] border-white/5 space-y-6">
                <h3 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em]">BMI Reference</h3>
                <div class="space-y-4">
                  <div *ngFor="let cat of [

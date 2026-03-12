@@ -45,6 +45,8 @@ export class WorkoutLoggerComponent implements OnInit {
         return plan.exercises[this.activeExerciseIndex()];
     });
 
+    workoutStarted = computed(() => this.currentSession() !== null);
+
     totalVolume = computed(() => {
         return this.sessionLogs().reduce((acc, log) => acc + (log.reps * log.weight), 0);
     });

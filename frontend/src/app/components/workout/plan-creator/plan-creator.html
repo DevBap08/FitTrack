@@ -1,6 +1,6 @@
-<div class="flex-1 min-h-0 p-8 lg:p-12 overflow-y-auto custom-scrollbar">
-    <div class="max-w-4xl mx-auto space-y-8">
-        <div class="mb-10 lg:mb-12">
+<div class="flex-1 min-h-0 p-6 lg:p-12 overflow-y-auto custom-scrollbar">
+    <div class="max-w-4xl mx-auto space-y-6 lg:space-y-8">
+        <div class="mb-8 lg:mb-12">
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight mb-2 flex flex-col">
                 <span class="text-white drop-shadow-sm">{{isEditMode ? 'EDIT WORKOUT' : 'CREATE WORKOUT'}} <span
                         class="text-theme-accent">PLAN</span></span>
@@ -16,7 +16,7 @@
         <!-- Form -->
         <form [formGroup]="planForm" (ngSubmit)="onSubmit()" class="space-y-8">
             <!-- Plan Name Card -->
-            <div class="bg-theme-bg border border-theme-border rounded-2xl p-8 space-y-6">
+            <div class="bg-theme-bg border border-theme-border rounded-2xl p-6 lg:p-8 space-y-6">
                 <div>
                     <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-3">Plan
                         Name</label>
@@ -37,7 +37,7 @@
 
                 <div formArrayName="exercises" class="space-y-4">
                     <div *ngFor="let exercise of exercises.controls; let i = index" [formGroupName]="i"
-                        class="bg-theme-bg border border-theme-border rounded-2xl p-8 animate-in fade-in slide-in-from-bottom-4 group">
+                        class="bg-theme-bg border border-theme-border rounded-2xl p-6 lg:p-8 animate-in fade-in slide-in-from-bottom-4 group">
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
                             <!-- Drag/Order Indicator -->
