@@ -14,7 +14,8 @@
             <div class="space-y-6">
                 <div class="grid grid-cols-1 gap-4">
                     <div class="card-elevated p-6 bg-theme-card">
-                        <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider mb-4">Planned
+                        <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider mb-4">
+                            Planned
                             Calorie Intake</h3>
                         <div class="flex items-baseline space-x-2">
                             <span class="text-3xl font-bold text-white">{{calorieProgress().target |
@@ -63,7 +64,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap gap-[5px] justify-start pt-2">
+                    <div class="grid grid-rows-7 grid-flow-col gap-[5px] pt-2 overflow-x-auto pb-2 custom-scrollbar">
                         <div *ngFor="let day of heatmapDays()" [title]="day.date"
                             [class]="day.intensity > 0 ? 'bg-theme-accent' : 'bg-theme-border'"
                             class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-[3px] transition-colors hover:scale-110 cursor-pointer">
@@ -92,7 +93,8 @@
 
                     <!-- 1RM Estimator Hub -->
                     <div class="card-elevated p-6 flex flex-col justify-between space-y-4">
-                        <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Estimated Max
+                        <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Estimated
+                            Max
                             Effort</h3>
                         <div class="space-y-4 pt-2">
                             <div *ngFor="let lift of [{n: 'Squat', v: '145'}, {n: 'Deadlift', v: '180'}, {n: 'Bench', v: '102'}]"
@@ -126,14 +128,16 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="card-elevated p-6 space-y-4">
-                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Consumed</h4>
+                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Consumed
+                        </h4>
                         <div class="flex items-baseline space-x-2">
                             <span class="text-3xl font-bold text-white">{{calorieProgress().consumed}}</span>
                             <span class="text-theme-text-muted text-xs font-medium">kcal</span>
                         </div>
                     </div>
                     <div class="card-elevated p-6 space-y-4">
-                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Remaining</h4>
+                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Remaining
+                        </h4>
                         <div class="flex items-baseline space-x-2">
                             <span class="text-3xl font-bold text-white">{{calorieProgress().target -
                                 calorieProgress().consumed}}</span>
@@ -141,10 +145,12 @@
                         </div>
                     </div>
                     <div class="card-elevated p-6 space-y-4">
-                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Protein Goal</h4>
+                        <h4 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider">Protein
+                            Goal</h4>
                         <div class="flex items-baseline space-x-2">
                             <span class="text-3xl font-bold text-white">{{proteinProgress().current}}</span>
-                            <span class="text-theme-text-muted text-xs font-medium">/ {{proteinProgress().target}}g</span>
+                            <span class="text-theme-text-muted text-xs font-medium">/
+                                {{proteinProgress().target}}g</span>
                         </div>
                     </div>
                 </div>
@@ -184,7 +190,8 @@
             </div>
 
             <div class="space-y-4">
-                <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider mb-2">Quick Links</h3>
+                <h3 class="text-[11px] font-semibold text-theme-text-muted uppercase tracking-wider mb-2">Quick Links
+                </h3>
                 <div class="space-y-2.5">
                     <button routerLink="/workout/select"
                         class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-theme-card border border-transparent hover:border-theme-border transition-all group">

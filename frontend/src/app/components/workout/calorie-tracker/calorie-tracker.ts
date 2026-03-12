@@ -18,9 +18,9 @@ import { ProfileService } from '../../../services/profile';
             <p class="text-slate-400 font-medium italic">Track your macros and stay within your calculated daily limits.</p>
           </div>
           
-          <div class="flex bg-white/5 p-1 rounded-2xl border border-white/5">
-            <button class="px-6 py-2 bg-emerald-600 rounded-xl text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-emerald-600/20">Today</button>
-            <button class="px-6 py-2 hover:text-white text-slate-500 text-xs font-black uppercase tracking-widest transition-all opacity-40">Previous</button>
+          <div class="flex w-full md:w-auto bg-white/5 p-1 rounded-2xl border border-white/5">
+            <button class="flex-1 md:flex-none px-6 py-3 lg:py-2 bg-emerald-600 rounded-xl text-xs font-black uppercase tracking-widest text-white shadow-lg shadow-emerald-600/20">Today</button>
+            <button class="flex-1 md:flex-none px-6 py-3 lg:py-2 hover:text-white text-slate-500 text-xs font-black uppercase tracking-widest transition-all opacity-40">Previous</button>
           </div>
         </div>
 

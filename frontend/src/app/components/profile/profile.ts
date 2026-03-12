@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
     <div class="flex-1 min-h-0 p-8 lg:p-12 overflow-y-auto custom-scrollbar">
       <div class="max-w-4xl mx-auto space-y-12">
         <!-- Header -->
-        <div class="space-y-4">
-          <h2 class="text-5xl font-black text-white tracking-tight font-display italic uppercase">Health <span class="text-indigo-400">Profile</span></h2>
+        <div class="space-y-4 mt-6 lg:mt-0">
+          <h2 class="text-4xl lg:text-5xl font-black text-white tracking-tight font-display italic uppercase">Health <span class="text-indigo-400">Profile</span></h2>
           <p class="text-slate-400 font-medium italic">Configure your physical metrics to unlock personalized calorie and macro targets.</p>
         </div>
 
