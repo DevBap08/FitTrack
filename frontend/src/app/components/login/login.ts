@@ -35,7 +35,13 @@ export class LoginComponent {
         },
         error: (err) => {
           this.isLoading.set(false);
-          this.error = 'Invalid username or password';
+          if (err.status === 401) {
+            this.error = 'Invalid username or password';
+          } else if (err.status === 0 || err.status >= 500) {
+            this.error = 'Server is sleeping or unreachable. Please try again in a few seconds.';
+          } else {
+            this.error = 'An unexpected error occurred. Please try again.';
+          }
           console.error('Login error', err);
         }
       });

@@ -27,6 +27,7 @@ export class WorkoutLoggerComponent implements OnInit {
     // Phase 8: Tracking & Analytics signals
     showCheckIn = signal<boolean>(false);
     showSummary = signal<boolean>(false);
+    showVideo = signal<boolean>(false);
     sessionStartTime = signal<Date | null>(null);
     sessionEndTime = signal<Date | null>(null);
 
@@ -37,6 +38,8 @@ export class WorkoutLoggerComponent implements OnInit {
         pain: false
     };
     sessionRating = signal<number>(5);
+    saveError = signal<string | null>(null);
+    isSaving = signal<boolean>(false);
 
     activeExerciseIndex = signal<number>(0);
     currentExercise = computed(() => {
@@ -168,6 +171,22 @@ export class WorkoutLoggerComponent implements OnInit {
         this.customRestTime.update(t => Math.max(0, t + delta));
     }
 
+    adjustReps(delta: number) {
+        const exerciseId = this.currentExercise()?.id;
+        if (exerciseId !== undefined) {
+            const currentReps = this.exerciseInputs[exerciseId].reps;
+            this.exerciseInputs[exerciseId].reps = Math.max(0, currentReps + delta);
+        }
+    }
+
+    adjustWeight(delta: number) {
+        const exerciseId = this.currentExercise()?.id;
+        if (exerciseId !== undefined) {
+            const currentWeight = this.exerciseInputs[exerciseId].weight;
+            this.exerciseInputs[exerciseId].weight = Math.max(0, currentWeight + delta);
+        }
+    }
+
     getLogsForExercise(exerciseId: number) {
         return this.sessionLogs().filter(log => log.exercise_id === exerciseId);
     }
@@ -193,7 +212,10 @@ export class WorkoutLoggerComponent implements OnInit {
 
     finishWorkout() {
         if (this.currentSession()) {
+            this.saveError.set(null);
+            this.isSaving.set(true);
             this.sessionEndTime.set(new Date());
+
             const session: WorkoutSession = {
                 ...this.currentSession()!,
                 end_time: this.sessionEndTime()?.toISOString(),
@@ -203,10 +225,15 @@ export class WorkoutLoggerComponent implements OnInit {
 
             this.workoutService.logSession(session).subscribe({
                 next: () => {
-                    this.showSummary.set(true); // Show success/summary before leaving
+                    this.isSaving.set(false);
+                    this.showSummary.set(true);
                     this.timerService.stopTimer();
                 },
-                error: (err) => console.error('Error logging session:', err)
+                error: (err) => {
+                    this.isSaving.set(false);
+                    this.saveError.set('Failed to save workout. Please try again or check your connection. Your data is still here.');
+                    console.error('Error logging session:', err);
+                }
             });
         }
     }

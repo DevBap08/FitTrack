@@ -114,3 +114,37 @@ input[type="range"]::-webkit-slider-runnable-track {
     0%, 100% { transform: translateY(-5%); animation-timing-function: cubic-bezier(0.8,0,1,1); }
     50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); }
 }
+
+@media (max-width: 640px) {
+    .text-5xl { font-size: 2.5rem; }
+    .text-6xl { font-size: 3rem; }
+    
+    .card-elevated {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+    }
+    
+    /* Make input text bold on mobile */
+    input.text-5xl {
+        font-size: 3.5rem;
+    }
+}
+
+/* Ensure buttons don't flash on tap */
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Video toggle icon rotation */
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* Tighter padding for compact desktop view */
+@media (min-width: 1024px) {
+    .lg\:p-8 { padding: 1.5rem; }
+    .lg\:p-12 { padding: 2rem; }
+    .lg\:space-y-12 > :not([hidden]) ~ :not([hidden]) {
+        margin-top: 2rem;
+    }
+}
